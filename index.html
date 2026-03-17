@@ -44,35 +44,18 @@
             min-height: 280px;
         }
     </style>
-    <!-- Chosen Palette: Warm Neutrals & Earth Tones (Stone, Amber, Orange) to reflect spiritual tradition and calmness. -->
-    <!-- Application Structure Plan: 
-         1. Hero Section: Sets the context and tone.
-         2. Dashboard Overview: Visualizing the thematic distribution of the shlokas using Chart.js to show the balance of teachings.
-         3. Interactive Shloka Library: The core interaction. A grid of cards filterable by theme. Cards toggle between Sanskrit/Verse and Meaning (Kan/Eng) to facilitate memorization (Flashcard style).
-         4. Vocabulary Builder: Interactive list to learn key Sanskrit terms.
-         5. Reflection Quiz: Active recall section based on the study guide questions.
-         Why: This structure moves from high-level context (charts) to deep study (cards) to checking understanding (quiz), supporting the "Teacher -> Student" or "Parent -> Child" flow.
-    -->
-    <!-- Visualization & Content Choices:
-         1. Doughnut Chart: "Thematic Composition". Goal: Inform. Shows how the selected shlokas cover different aspects of life (Karma, Bhakti, etc.).
-         2. Bar Chart: "Concept Frequency". Goal: Analyze. Shows repetition of key ideas like 'Atma' or 'Dharma'.
-         3. Interactive Cards: Goal: Memorize. Flashcard interaction without complex animations, using JS to swap content.
-         4. Quiz: Goal: Assess. Simple JS validation.
-         5. NO SVG/Mermaid confirmation.
-    -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 </head>
 <body class="bg-[#fcfaf5] text-stone-800">
 
-    <!-- Navigation / Header -->
     <header class="bg-amber-700 text-white shadow-lg sticky top-0 z-50">
         <div class="container mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center">
             <div class="text-center md:text-left">
                 <h1 class="text-2xl md:text-3xl font-bold">Achala Bhagavad Gita Saara</h1>
                 <p class="text-amber-100 text-sm">Interactive Learning for Students</p>
             </div>
-            <nav class="mt-4 md:mt-0 space-x-4 text-sm font-semibold">
+            <nav class="mt-4 md:mt-0 flex flex-wrap justify-center space-x-4 text-sm font-semibold">
                 <button onclick="scrollToSection('overview')" class="hover:text-amber-200 transition">Overview</button>
+                <button onclick="scrollToSection('flipbook')" class="hover:text-amber-200 transition">Digital Book</button>
                 <button onclick="scrollToSection('shlokas')" class="hover:text-amber-200 transition">Shlokas</button>
                 <button onclick="scrollToSection('vocabulary')" class="hover:text-amber-200 transition">Vocabulary</button>
                 <button onclick="scrollToSection('quiz')" class="hover:text-amber-200 transition">Quiz</button>
@@ -82,18 +65,30 @@
 
     <main class="container mx-auto px-4 py-8 space-y-12">
 
-        <!-- Introduction -->
         <section id="overview" class="max-w-4xl mx-auto text-center space-y-4">
             <h2 class="text-3xl font-bold text-amber-900">The Essence of Wisdom</h2>
             <p class="text-lg leading-relaxed text-stone-600">
                 Welcome to the digital companion for the <strong>Achala Bhagavad Gita Saara</strong>. 
-                This guide is designed to help teachers, parents, and students explore 10 essential verses that teach the core values of 
+                This guide is designed to help teachers, parents, and students explore essential verses that teach the core values of 
                 <strong>Duty (Karma), Devotion (Bhakti), and Self-Knowledge (Atma Jnana)</strong>. 
-                Use the charts below to understand the structure of these teachings, then dive into the interactive flashcards to memorize the verses.
+                Use the interactive flipbook to read the text, explore the charts, and dive into the flashcards to memorize the verses.
             </p>
         </section>
 
-        <!-- Dashboard / Visualizations -->
+        <section id="flipbook" class="bg-white rounded-xl card-shadow p-6 md:p-8">
+            <div class="mb-6 border-b border-stone-200 pb-4 flex flex-col md:flex-row justify-between items-center">
+                <div class="text-center md:text-left">
+                    <h3 class="text-2xl font-bold text-amber-800">Interactive Digital Book</h3>
+                    <p class="text-stone-500">Read and flip through the complete guide.</p>
+                </div>
+            </div>
+
+            <div class="relative w-full aspect-video rounded-lg overflow-hidden border border-stone-200 shadow-sm bg-stone-100">
+                
+                <iframe allowfullscreen="true" scrolling="no" class="w-full h-full border-none" src="https://heyzine.com/flip-book/30810339ca.html"></iframe>
+                
+            </div>
+        </section>
         <section class="bg-white rounded-xl card-shadow p-6 md:p-8">
             <div class="mb-6 border-b border-stone-200 pb-4">
                 <h3 class="text-2xl font-bold text-amber-800">Thematic Analysis</h3>
@@ -101,8 +96,6 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                
-                <!-- Chart 1: Thematic Distribution -->
                 <div class="flex flex-col items-center">
                     <h4 class="text-lg font-semibold mb-4 text-stone-700 text-center">Focus Areas of the 10 Shlokas</h4>
                     <div class="chart-container">
@@ -113,7 +106,6 @@
                     </p>
                 </div>
 
-                <!-- Chart 2: Key Concept Frequency -->
                 <div class="flex flex-col items-center">
                     <h4 class="text-lg font-semibold mb-4 text-stone-700 text-center">Key Concept Frequency</h4>
                     <div class="chart-container">
@@ -126,15 +118,12 @@
             </div>
         </section>
 
-        <!-- Shloka Explorer -->
         <section id="shlokas" class="space-y-6">
             <div class="flex flex-col md:flex-row justify-between items-center border-b border-stone-300 pb-4">
                 <div>
                     <h3 class="text-2xl font-bold text-amber-800">Shloka Explorer</h3>
                     <p class="text-stone-600">Click any card to flip between the Verse and its Meaning.</p>
                 </div>
-                
-                <!-- Filters -->
                 <div class="mt-4 md:mt-0 flex flex-wrap gap-2 justify-center">
                     <button onclick="filterShlokas('All')" class="filter-btn active px-4 py-2 rounded-full text-sm font-semibold bg-amber-600 text-white shadow-sm hover:bg-amber-700 transition">All</button>
                     <button onclick="filterShlokas('Karma')" class="filter-btn px-4 py-2 rounded-full text-sm font-semibold bg-stone-200 text-stone-700 shadow-sm hover:bg-stone-300 transition">Karma (Action)</button>
@@ -144,31 +133,24 @@
                 </div>
             </div>
 
-            <!-- Grid Container -->
             <div id="shloka-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Cards will be injected here by JS -->
-            </div>
+                </div>
         </section>
 
-        <!-- Vocabulary Section -->
         <section id="vocabulary" class="bg-amber-50 rounded-xl p-6 md:p-8 border border-amber-100">
             <h3 class="text-2xl font-bold text-amber-800 mb-6">Sanskrit Vocabulary Builder</h3>
             <p class="mb-4 text-stone-700">Select a term to see its definition in English and Kannada.</p>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <!-- Word List -->
                 <div class="md:col-span-1 space-y-2 max-h-64 overflow-y-auto pr-2" id="vocab-list">
-                    <!-- Buttons injected by JS -->
-                </div>
+                    </div>
                 
-                <!-- Definition Display -->
                 <div class="md:col-span-2 bg-white rounded-lg p-6 flex flex-col justify-center items-center text-center shadow-inner min-h-[200px]" id="vocab-display">
                     <p class="text-stone-400 italic">Select a word from the list...</p>
                 </div>
             </div>
         </section>
 
-        <!-- Quiz Section -->
         <section id="quiz" class="max-w-3xl mx-auto space-y-6">
             <div class="text-center">
                 <h3 class="text-2xl font-bold text-amber-800">Reflection Quiz</h3>
@@ -176,8 +158,7 @@
             </div>
 
             <div id="quiz-container" class="space-y-4">
-                <!-- Quiz questions injected by JS -->
-            </div>
+                </div>
             
             <div class="text-center pt-4">
                 <button onclick="resetQuiz()" class="px-6 py-2 bg-stone-600 text-white rounded hover:bg-stone-700 transition">Reset Quiz</button>
@@ -190,7 +171,7 @@
         <div class="container mx-auto px-4 text-center">
             <p class="font-serif italic text-lg mb-2">"Uddhared atmanatmanam"</p>
             <p class="text-sm">Elevate yourself by your own self.</p>
-            <p class="text-xs mt-8 opacity-50">Designed for Educational Purposes | Based on Bhagavad Gita Saara</p>
+            <p class="text-xs mt-8 opacity-50">Designed for Educational Purposes | Based on Achala Bhagavad Gita Saara</p>
         </div>
     </footer>
 
