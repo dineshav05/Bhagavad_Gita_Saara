@@ -1,548 +1,296 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Achala Bhagavad Gita Saara: Interactive Learning Experience</title>
+    <title>Achala Bhagavad Gita Saara | Interactive Learning Hub</title>
     <link rel="icon" type="image/png" href="Gitaa_saara_fav.png">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Kannada:wght@300;400;600;700&family=Noto+Serif:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Kannada:wght@400;600;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
     <style>
-        body {
-            font-family: 'Noto Serif', serif;
-            background-color: #fcfaf5; /* Warm sand color */
-            color: #44403c; /* Stone 700 */
-        }
-        h1, h2, h3, .kannada-text {
-            font-family: 'Noto Sans Kannada', sans-serif;
-        }
-        .card-shadow {
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .card-shadow:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-        /* Chart Container Specifics */
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 300px;
-            max-height: 400px;
-        }
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 350px;
-            }
-        }
-        .shloka-card {
-            min-height: 280px;
-        }
+        body { font-family: 'Poppins', sans-serif; background-color: #fdfbf7; color: #334155; }
+        .kannada-text { font-family: 'Noto Sans Kannada', sans-serif; }
+        
+        /* Smooth Card Flip Animation */
+        .perspective-1000 { perspective: 1000px; }
+        .transform-style-3d { transform-style: preserve-3d; }
+        .backface-hidden { backface-visibility: hidden; }
+        .rotate-y-180 { transform: rotateY(180deg); }
+        .card-inner { transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); }
+        .is-flipped .card-inner { transform: rotateY(180deg); }
+
+        /* Custom Accents */
+        .accent-border { border-top: 4px solid #d97706; }
     </style>
 </head>
-<body class="bg-[#fcfaf5] text-stone-800">
+<body class="antialiased selection:bg-amber-200 selection:text-amber-900">
 
-    <header class="bg-amber-700 text-white shadow-lg sticky top-0 z-50">
-        <div class="container mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center">
-            <div class="text-center md:text-left">
-                <h1 class="text-2xl md:text-3xl font-bold">Achala Bhagavad Gita Saara</h1>
-                <p class="text-amber-100 text-sm">Interactive Learning for Students</p>
+    <nav class="bg-amber-700 text-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center space-x-3">
+                    <span class="text-2xl">🪔</span>
+                    <span class="font-bold text-xl tracking-wide">Achala Value Education</span>
+                </div>
+                <div class="hidden md:flex space-x-6 text-sm font-semibold">
+                    <a href="#flipbook" class="hover:text-amber-200 transition">Digital Book</a>
+                    <a href="#shlokas" class="hover:text-amber-200 transition">Shloka Explorer</a>
+                    <a href="#vocab" class="hover:text-amber-200 transition">Vocabulary</a>
+                    <a href="#quiz" class="hover:text-amber-200 transition">Interactive Quiz</a>
+                </div>
             </div>
-            <nav class="mt-4 md:mt-0 flex flex-wrap justify-center space-x-4 text-sm font-semibold">
-                <button onclick="scrollToSection('overview')" class="hover:text-amber-200 transition">Overview</button>
-                <button onclick="scrollToSection('flipbook')" class="hover:text-amber-200 transition">Digital Book</button>
-                <button onclick="scrollToSection('shlokas')" class="hover:text-amber-200 transition">Shlokas</button>
-                <button onclick="scrollToSection('vocabulary')" class="hover:text-amber-200 transition">Vocabulary</button>
-                <button onclick="scrollToSection('quiz')" class="hover:text-amber-200 transition">Quiz</button>
-            </nav>
+        </div>
+    </nav>
+
+    <header class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold text-amber-900 mb-4 kannada-text">ಭಗವದ್ಗೀತೆಯ ಬೆಳಕು</h1>
+        <h2 class="text-2xl md:text-3xl font-semibold text-stone-700 mb-6">The Light of Bhagavad Gita</h2>
+        <p class="max-w-2xl mx-auto text-lg text-stone-600 mb-10">An interactive life-skills manual designed to build focus, discipline, and strong moral character.</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+            <div class="bg-white p-6 rounded-xl shadow-sm accent-border">
+                <h3 class="font-bold text-lg text-amber-800 mb-2">🧑‍🏫 For Teachers</h3>
+                <p class="text-sm text-stone-600">Project the digital book on your smartboard. Use the Shloka Explorer for morning assemblies and the Quiz for classroom activities.</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-sm accent-border">
+                <h3 class="font-bold text-lg text-amber-800 mb-2">👨‍👩‍👧 For Parents</h3>
+                <p class="text-sm text-stone-600">Read the flipbook with your child. Use the Vocabulary section to help them learn Sanskrit pronunciation and life values.</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-sm accent-border">
+                <h3 class="font-bold text-lg text-amber-800 mb-2">🎓 For Students</h3>
+                <p class="text-sm text-stone-600">Click on the Shloka Flashcards to reveal the meanings, test your knowledge in the Quiz, and apply the lessons to your daily life.</p>
+            </div>
         </div>
     </header>
 
-    <main class="container mx-auto px-4 py-8 space-y-12">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-20">
 
-        <section id="overview" class="max-w-4xl mx-auto text-center space-y-4">
-            <h2 class="text-3xl font-bold text-amber-900">The Essence of Wisdom</h2>
-            <p class="text-lg leading-relaxed text-stone-600">
-                Welcome to the digital companion for the <strong>Achala Bhagavad Gita Saara</strong>. 
-                This guide is designed to help teachers, parents, and students explore essential verses that teach the core values of 
-                <strong>Duty (Karma), Devotion (Bhakti), and Self-Knowledge (Atma Jnana)</strong>. 
-                Use the interactive flipbook to read the text, explore the charts, and dive into the flashcards to memorize the verses.
-            </p>
-        </section>
-
-        <section id="flipbook" class="bg-white rounded-xl card-shadow p-6 md:p-8">
-            <div class="mb-6 border-b border-stone-200 pb-4 flex flex-col md:flex-row justify-between items-center">
-                <div class="text-center md:text-left">
-                    <h3 class="text-2xl font-bold text-amber-800">Interactive Digital Book</h3>
-                    <p class="text-stone-500">Read and flip through the complete guide.</p>
-                </div>
+        <section id="flipbook" class="scroll-mt-20">
+            <div class="flex items-center space-x-3 mb-6">
+                <h2 class="text-3xl font-bold text-stone-800">Read the Book</h2>
+                <div class="h-1 flex-grow bg-amber-200 rounded"></div>
             </div>
-
-            <div class="relative w-full aspect-video rounded-lg overflow-hidden border border-stone-200 shadow-sm bg-stone-100">
-                
-                <iframe allowfullscreen="true" scrolling="no" class="w-full h-full border-none" src="https://heyzine.com/flip-book/30810339ca.html"></iframe>
-                
-            </div>
-        </section>
-        <section class="bg-white rounded-xl card-shadow p-6 md:p-8">
-            <div class="mb-6 border-b border-stone-200 pb-4">
-                <h3 class="text-2xl font-bold text-amber-800">Thematic Analysis</h3>
-                <p class="text-stone-500">Understanding the distribution of concepts in this collection.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                <div class="flex flex-col items-center">
-                    <h4 class="text-lg font-semibold mb-4 text-stone-700 text-center">Focus Areas of the 10 Shlokas</h4>
-                    <div class="chart-container">
-                        <canvas id="themeChart"></canvas>
-                    </div>
-                    <p class="text-sm text-stone-500 mt-4 text-center italic px-4">
-                        This chart visualizes how the selected verses are balanced between Action, Devotion, Knowledge, and Righteousness.
-                    </p>
-                </div>
-
-                <div class="flex flex-col items-center">
-                    <h4 class="text-lg font-semibold mb-4 text-stone-700 text-center">Key Concept Frequency</h4>
-                    <div class="chart-container">
-                        <canvas id="conceptChart"></canvas>
-                    </div>
-                    <p class="text-sm text-stone-500 mt-4 text-center italic px-4">
-                        A count of how often primary spiritual concepts appear or are referenced in these specific verses.
-                    </p>
+            <div class="bg-stone-100 p-2 rounded-2xl shadow-inner">
+                <div class="relative w-full aspect-[16/9] md:aspect-[21/9] rounded-xl overflow-hidden border border-stone-300 bg-white">
+                    <iframe allowfullscreen="true" scrolling="no" class="w-full h-full border-none" src="https://heyzine.com/flip-book/preview.html"></iframe>
                 </div>
             </div>
         </section>
 
-        <section id="shlokas" class="space-y-6">
-            <div class="flex flex-col md:flex-row justify-between items-center border-b border-stone-300 pb-4">
-                <div>
-                    <h3 class="text-2xl font-bold text-amber-800">Shloka Explorer</h3>
-                    <p class="text-stone-600">Click any card to flip between the Verse and its Meaning.</p>
-                </div>
-                <div class="mt-4 md:mt-0 flex flex-wrap gap-2 justify-center">
-                    <button onclick="filterShlokas('All')" class="filter-btn active px-4 py-2 rounded-full text-sm font-semibold bg-amber-600 text-white shadow-sm hover:bg-amber-700 transition">All</button>
-                    <button onclick="filterShlokas('Karma')" class="filter-btn px-4 py-2 rounded-full text-sm font-semibold bg-stone-200 text-stone-700 shadow-sm hover:bg-stone-300 transition">Karma (Action)</button>
-                    <button onclick="filterShlokas('Bhakti')" class="filter-btn px-4 py-2 rounded-full text-sm font-semibold bg-stone-200 text-stone-700 shadow-sm hover:bg-stone-300 transition">Bhakti (Devotion)</button>
-                    <button onclick="filterShlokas('Atman')" class="filter-btn px-4 py-2 rounded-full text-sm font-semibold bg-stone-200 text-stone-700 shadow-sm hover:bg-stone-300 transition">Atman (Soul)</button>
-                    <button onclick="filterShlokas('Dharma')" class="filter-btn px-4 py-2 rounded-full text-sm font-semibold bg-stone-200 text-stone-700 shadow-sm hover:bg-stone-300 transition">Dharma (Duty)</button>
-                </div>
+        <section id="shlokas" class="scroll-mt-20">
+            <div class="flex items-center space-x-3 mb-6">
+                <h2 class="text-3xl font-bold text-stone-800">Shloka Flashcards</h2>
+                <div class="h-1 flex-grow bg-amber-200 rounded"></div>
             </div>
-
-            <div id="shloka-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                </div>
-        </section>
-
-        <section id="vocabulary" class="bg-amber-50 rounded-xl p-6 md:p-8 border border-amber-100">
-            <h3 class="text-2xl font-bold text-amber-800 mb-6">Sanskrit Vocabulary Builder</h3>
-            <p class="mb-4 text-stone-700">Select a term to see its definition in English and Kannada.</p>
+            <p class="text-stone-600 mb-8">Click or tap any card to flip it and reveal the meaning in Kannada and English.</p>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="md:col-span-1 space-y-2 max-h-64 overflow-y-auto pr-2" id="vocab-list">
+            <div id="flashcard-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                </div>
+        </section>
+
+        <section id="vocab" class="scroll-mt-20">
+            <div class="flex items-center space-x-3 mb-6">
+                <h2 class="text-3xl font-bold text-stone-800">Sanskrit Vocabulary</h2>
+                <div class="h-1 flex-grow bg-amber-200 rounded"></div>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-sm border border-stone-200 overflow-hidden flex flex-col md:flex-row">
+                <div class="w-full md:w-1/3 bg-stone-50 border-r border-stone-200 p-4 max-h-96 overflow-y-auto" id="vocab-list">
                     </div>
-                
-                <div class="md:col-span-2 bg-white rounded-lg p-6 flex flex-col justify-center items-center text-center shadow-inner min-h-[200px]" id="vocab-display">
-                    <p class="text-stone-400 italic">Select a word from the list...</p>
+                <div class="w-full md:w-2/3 p-8 flex flex-col justify-center items-center text-center min-h-[250px]" id="vocab-display">
+                    <span class="text-6xl mb-4 opacity-20">🔍</span>
+                    <p class="text-lg text-stone-500">Select a word from the list to see its meaning.</p>
                 </div>
             </div>
         </section>
 
-        <section id="quiz" class="max-w-3xl mx-auto space-y-6">
-            <div class="text-center">
-                <h3 class="text-2xl font-bold text-amber-800">Reflection Quiz</h3>
-                <p class="text-stone-600">Test your understanding of the Gita Saara.</p>
+        <section id="quiz" class="scroll-mt-20 mb-20">
+            <div class="flex items-center space-x-3 mb-6">
+                <h2 class="text-3xl font-bold text-stone-800">Test Your Knowledge</h2>
+                <div class="h-1 flex-grow bg-amber-200 rounded"></div>
             </div>
-
-            <div id="quiz-container" class="space-y-4">
-                </div>
             
-            <div class="text-center pt-4">
-                <button onclick="resetQuiz()" class="px-6 py-2 bg-stone-600 text-white rounded hover:bg-stone-700 transition">Reset Quiz</button>
+            <div class="max-w-3xl mx-auto bg-white p-8 rounded-2xl shadow-sm border border-stone-200">
+                <div id="quiz-container" class="space-y-8">
+                    </div>
+                <div class="mt-8 text-center pt-6 border-t border-stone-100">
+                    <button onclick="resetQuiz()" class="px-6 py-2 bg-stone-100 text-stone-600 font-semibold rounded-lg hover:bg-stone-200 transition">↻ Retake Quiz</button>
+                </div>
             </div>
         </section>
 
     </main>
 
-    <footer class="bg-stone-800 text-stone-300 py-8 mt-12">
-        <div class="container mx-auto px-4 text-center">
-            <p class="font-serif italic text-lg mb-2">"Uddhared atmanatmanam"</p>
-            <p class="text-sm">Elevate yourself by your own self.</p>
-            <p class="text-xs mt-8 opacity-50">Designed for Educational Purposes | Based on Achala Bhagavad Gita Saara</p>
-        </div>
+    <footer class="bg-stone-900 text-stone-400 py-10 text-center">
+        <p class="font-serif italic text-xl text-stone-300 mb-2">"Uddhared atmanatmanam"</p>
+        <p class="text-sm mb-6">Elevate yourself by your own self. (Gita 6.5)</p>
+        <p class="text-xs">© 2026 Achala Value Education Series | Designed by Dinesha Vishwanatha</p>
     </footer>
 
     <script>
-        // --- Data Source ---
+        // --- 1. DATA SOURCE ---
         const shlokas = [
             {
-                id: 1,
-                theme: "Karma",
+                theme: "Karma (Duty)",
                 sanskrit: "ಕರ್ಮಣ್ಯೇವಾಧಿಕಾರಸ್ತೇ ಮಾ ಫಲೇಷು ಕದಾಚನ |\nಮಾ ಕರ್ಮಫಲಹೇತುರ್ಭೂಃ ಮಾ ತೇ ಸಂಗೋಸ್ತ್ವಕರ್ಮಣಿ ||",
-                transliteration: "Karmanye vadhikaraste ma phaleshu kadachana |\nMa karma-phala-hetur bhur ma te sango'stvakarmani ||",
-                english: "You have a right to perform your prescribed duties, but you are not entitled to the fruits of your actions. Do not let the fruit be the purpose of your actions, and let there be no attachment to inaction.",
-                kannada: "ನಿನಗೆ ಕರ್ಮ ಮಾಡಲು ಮಾತ್ರ ಅಧಿಕಾರವಿದೆ, ಕರ್ಮದ ಫಲಗಳಿಗಿಲ್ಲ. ಫಲದ ನಿರೀಕ್ಷೆಯಿಲ್ಲದೆ ಕರ್ಮ ಮಾಡು. ಕರ್ಮಫಲಕ್ಕೆ ಕಾರಣನಾಗಬೇಡ ಮತ್ತು ಕರ್ಮವನ್ನು ಮಾಡದಿರುವುದರಲ್ಲಿ ನಿನಗೆ ಆಸಕ್ತಿ ಬೇಡ.",
-                summary: "Duty without Attachment"
+                translit: "Karmanye vadhikaraste ma phaleshu kadachana...",
+                kannada: "ನಿನಗೆ ಕರ್ಮ ಮಾಡಲು ಮಾತ್ರ ಅಧಿಕಾರವಿದೆ, ಫಲಗಳಿಗಿಲ್ಲ. ಫಲದ ನಿರೀಕ್ಷೆಯಿಲ್ಲದೆ ಕರ್ಮ ಮಾಡು.",
+                english: "You have a right to perform your duty, but not to the fruits of your actions."
             },
             {
-                id: 2,
-                theme: "Dharma",
-                sanskrit: "ಯದಾ ಯದಾ ಹಿ ಧರ್ಮಸ್ಯ ಗ್ಲಾನಿರ್ಭವತಿ ಭಾರತ |\nಅಭ್ಯುತ್ಥಾನಮಧರ್ಮಸ್ಯ ತದಾತ್ಮಾನಂ ಸೃಜಾಮ್ಯಹಮ್ ||",
-                transliteration: "Yada yada hi dharmasya glanir bhavati bharata |\nAbhyutthanam adharmasya tadatmanam srijamyaham ||",
-                english: "Whenever there is a decline in righteousness and an increase in unrighteousness, O Arjuna, at that time I manifest myself.",
-                kannada: "ಹೇ ಅರ್ಜುನ, ಯಾವಾಗ ಧರ್ಮಕ್ಕೆ ಹಾನಿಯುಂಟಾಗುತ್ತದೆಯೋ ಮತ್ತು ಅಧರ್ಮವು ಹೆಚ್ಚಾಗುತ್ತದೆಯೋ, ಆಗ ನಾನು ಅವತರಿಸುತ್ತೇನೆ.",
-                summary: "Rise of Dharma"
-            },
-            {
-                id: 3,
-                theme: "Dharma",
-                sanskrit: "ಪರಿತ್ರಾಣಾಯ ಸಾಧೂನಾಂ ವಿನಾಶಾಯ ಚ ದುಷ್ಕೃತಾಮ್ |\nಧರ್ಮಸಂಸ್ಥಾಪನಾರ್ಥಾಯ ಸಂಭವಾಮಿ ಯುಗೇ ಯುಗೇ ||",
-                transliteration: "Paritranaya sadhunam vinashaya cha dushkritam |\nDharma-samsthapanarthaya sambhavami yuge yuge ||",
-                english: "To deliver the pious and to annihilate the miscreants, as well as to reestablish the principles of religion, I Myself appear, millennium after millennium.",
-                kannada: "ಸಾಧುಗಳ ರಕ್ಷಣೆಗಾಗಿ, ದುಷ್ಟರ ನಾಶಕ್ಕಾಗಿ ಮತ್ತು ಧರ್ಮವನ್ನು ಸ್ಥಾಪಿಸುವುದಕ್ಕಾಗಿ ನಾನು ಪ್ರತಿಯೊಂದು ಯುಗದಲ್ಲೂ ಅವತರಿಸುತ್ತೇನೆ.",
-                summary: "Purpose of Avatar"
-            },
-            {
-                id: 4,
-                theme: "Atman",
-                sanskrit: "ನ ಜಾಯತೇ ಮ್ರಿಯತೇ ವಾ ಕದಾಚಿನ್\nನಾಯಂ ಭೂತ್ವಾ ಭವಿತಾ ವಾ ನ ಭೂಯಃ |\nಅಜೋ ನಿತ್ಯಃ ಶಾಶ್ವತೋಯಂ ಪುರಾಣೋ\nನ ಹನ್ಯತೇ ಹನ್ಯಮಾನೇ ಶರೀರೇ ||",
-                transliteration: "Na jayate mriyate va kadachin\nnayam bhutva bhavita va na bhuyah |\nAjo nityah shashvatoyam purano\nna hanyate hanyamane sharire ||",
-                english: "The soul is never born nor dies at any time. It is unborn, eternal, ever-existing, and primeval. It is not slain when the body is slain.",
-                kannada: "ಆತ್ಮಕ್ಕೆ ಹುಟ್ಟಿಲ್ಲ, ಸಾವಿಲ್ಲ. ಆತ್ಮವು ಶಾಶ್ವತವಾದದ್ದು ಮತ್ತು ಪುರಾತನವಾದದ್ದು. ಶರೀರವು ನಾಶವಾದರೂ ಆತ್ಮವು ನಾಶವಾಗುವುದಿಲ್ಲ.",
-                summary: "Eternal Soul"
-            },
-            {
-                id: 5,
-                theme: "Atman",
-                sanskrit: "ವಾಸಾಂಸಿ ಜೀರ್ಣಾನಿ ಯಥಾ ವಿಹಾಯ\nನವಾನಿ ಗೃಹ್ಣಾತಿ ನರೋಪರಾಣಿ |\nತಥಾ ಶರೀರಾಣಿ ವಿಹಾಯ ಜೀರ್ಣಾನ್ಯ\nನ್ಯಾನಿ ಸಂಯಾತಿ ನವಾನಿ ದೇಹೀ ||",
-                transliteration: "Vasamsi jirnani yatha vihaya\nnavani grihnati naro’parani |\nTatha sharirani vihaya jirnanya\nnyani samyati navani dehi ||",
-                english: "As a person puts on new garments, giving up old ones, the soul similarly accepts new material bodies, giving up the old and useless ones.",
-                kannada: "ಮನುಷ್ಯನು ಹಳೆಯ ಬಟ್ಟೆಗಳನ್ನು ಬಿಟ್ಟು ಹೊಸ ಬಟ್ಟೆಗಳನ್ನು ಧರಿಸುವಂತೆ, ಆತ್ಮವು ಹಳೆಯ ದೇಹವನ್ನು ತ್ಯಜಿಸಿ ಹೊಸ ದೇಹವನ್ನು ಪಡೆಯುತ್ತದೆ.",
-                summary: "Changing Bodies"
-            },
-            {
-                id: 6,
-                theme: "Atman",
-                sanskrit: "ನೈನಂ ಛಿಂದಂತಿ ಶಸ್ತ್ರಾಣಿ ನೈನಂ ದಹತಿ ಪಾವಕಃ |\nನ ಚೈನಂ ಕ್ಲೇದಯಂತ್ಯಾಪೋ ನ ಶೋಷಯತಿ ಮಾರುತಃ ||",
-                transliteration: "Nainam chhindanti shastrani nainam dahati pavakah |\nNa chainam kledayantyapo na shoshayati marutah ||",
-                english: "The soul can never be cut to pieces by any weapon, nor burned by fire, nor moistened by water, nor withered by the wind.",
-                kannada: "ಆತ್ಮವನ್ನು ಶಸ್ತ್ರಗಳು ಕತ್ತರಿಸಲಾರವು, ಬೆಂಕಿ ಸುಡಲಾರದು, ನೀರು ನೆನೆಸಲಾರದು ಮತ್ತು ಗಾಳಿ ಒಣಗಿಸಲಾರದು.",
-                summary: "Indestructible Soul"
-            },
-            {
-                id: 7,
-                theme: "Bhakti",
-                sanskrit: "ಪತ್ರಂ ಪುಷ್ಪಂ ಫಲಂ ತೋಯಂ ಯೋ ಮೇ ಭಕ್ತ್ಯಾ ಪ್ರಯಚ್ಛತಿ |\nತದಹಂ ಭಕ್ತ್ಯುಪಹೃತಮಶ್ನಾಮಿ ಪ್ರಯತಾತ್ಮನಃ ||",
-                transliteration: "Patram pushpam phalam toyam yo me bhaktya prayacchati |\nTadaham bhaktyupahritam ashnami prayatatmanah ||",
-                english: "If one offers Me with love and devotion a leaf, a flower, a fruit or water, I will accept it.",
-                kannada: "ಯಾರೇ ಆಗಲಿ ಭಕ್ತಿಯಿಂದ ನನಗೆ ಒಂದು ಎಲೆ, ಹೂವು, ಹಣ್ಣು ಅಥವಾ ನೀರನ್ನು ಅರ್ಪಿಸಿದರೆ, ನಾನು ಅದನ್ನು ಪ್ರೀತಿಯಿಂದ ಸ್ವೀಕರಿಸುತ್ತೇನೆ.",
-                summary: "Simple Devotion"
-            },
-            {
-                id: 8,
-                theme: "Bhakti",
-                sanskrit: "ಅನನ್ಯಾಶ್ಚಿಂತಯಂತೋ ಮಾಂ ಯೇ ಜನಾಃ ಪರ್ಯುಪಾಸತೇ |\nತೇಷಾಂ ನಿತ್ಯಾಭಿಯುಕ್ತಾನಾಂ ಯೋಗಕ್ಷೇಮಂ ವಹಾಮ್ಯಹಮ್ ||",
-                transliteration: "Ananyas chintayanto mam ye janah paryupasate |\nTesham nityabhiyuktanam yoga-kshemam vahamyaham ||",
-                english: "But those who always worship Me with exclusive devotion, meditating on My transcendental form—to them I carry what they lack, and I preserve what they have.",
-                kannada: "ಯಾರು ನನ್ನನ್ನೇ ಅನನ್ಯ ಭಾವದಿಂದ ಚಿಂತಿಸುತ್ತಾ ಆರಾಧಿಸುತ್ತಾರೋ, ಅವರ ಯೋಗಕ್ಷೇಮವನ್ನು ನಾನೇ ವಹಿಸಿಕೊಳ್ಳುತ್ತೇನೆ.",
-                summary: "Divine Protection"
-            },
-            {
-                id: 9,
-                theme: "Bhakti",
-                sanskrit: "ಸರ್ವಧರ್ಮಾನ್ಪರಿತ್ಯಜ್ಯ ಮಾಮೇಕಂ ಶರಣಂ ವ್ರಜ |\nಅಹಂ ತ್ವಾ ಸರ್ವಪಾಪೇಭ್ಯೋ ಮೋಕ್ಷಯಿಷ್ಯಾಮಿ ಮಾ ಶುಚಃ ||",
-                transliteration: "Sarva-dharman parityajya mam ekam sharanam vraja |\nAham tva sarva-papebhyo mokshayishyami ma shuchah ||",
-                english: "Abandon all varieties of religion and just surrender unto Me. I shall deliver you from all sinful reactions. Do not fear.",
-                kannada: "ಎಲ್ಲಾ ಧರ್ಮಗಳನ್ನು ತ್ಯಜಿಸಿ ನನ್ನೊಬ್ಬನಿಗೆ ಶರಣಾಗು. ನಾನು ನಿನ್ನನ್ನು ಎಲ್ಲಾ ಪಾಪಗಳಿಂದ ಮುಕ್ತಗೊಳಿಸುತ್ತೇನೆ, ಚಿಂತಿಸಬೇಡ.",
-                summary: "Total Surrender"
-            },
-            {
-                id: 10,
-                theme: "Self",
+                theme: "Mind Control",
                 sanskrit: "ಉದ್ಧರೇದಾತ್ಮನಾತ್ಮಾನಂ ನಾತ್ಮಾನಮವಸಾದಯೇತ್ |\nಆತ್ಮೈವ ಹ್ಯಾತ್ಮನೋ ಬಂಧುರಾತ್ಮೈವ ರಿಪುರಾತ್ಮನಃ ||",
-                transliteration: "Uddhared atmanatmanam natmanam avasadayet |\nAtmaiva hyatmano bandhur atmaiva ripuratmanah ||",
-                english: "One must deliver himself with the help of his mind, and not degrade himself. The mind is the friend of the conditioned soul, and his enemy as well.",
-                kannada: "ಮನುಷ್ಯನು ತನ್ನ ಉದ್ಧಾರವನ್ನು ತಾನೇ ಮಾಡಿಕೊಳ್ಳಬೇಕು. ಮನಸ್ಸೇ ಮನುಷ್ಯನಿಗೆ ಬಂಧು ಮತ್ತು ಮನಸ್ಸೇ ಮನುಷ್ಯನಿಗೆ ಶತ್ರು.",
-                summary: "Self-Mastery"
+                translit: "Uddhared atmanatmanam natmanam avasadayet...",
+                kannada: "ಮನುಷ್ಯನು ತನ್ನ ಉದ್ಧಾರವನ್ನು ತಾನೇ ಮಾಡಿಕೊಳ್ಳಬೇಕು. ಮನಸ್ಸೇ ಮನುಷ್ಯನಿಗೆ ಬಂಧು ಮತ್ತು ಶತ್ರು.",
+                english: "One must elevate himself by his own mind. The mind is the friend, and also the enemy."
+            },
+            {
+                theme: "Tolerance",
+                sanskrit: "ಮಾತ್ರಾಸ್ಪರ್ಶಾಸ್ತು ಕೌಂತೇಯ ಶೀತೋಷ್ಣಸುಖದುಃಖದಾಃ |\nಆಗಮಾಪಾಯಿನೋಽನಿತ್ಯಾಸ್ತಾಂಸ್ತಿತಿಕ್ಷಸ್ವ ಭಾರತ ||",
+                translit: "Matrasparshastu kaunteya shitoshnasukhaduhkhadah...",
+                kannada: "ಚಳಿ-ಬಿಸಿಲು ಮತ್ತು ಸುಖ-ದುಃಖಗಳು ಬರುತ್ತವೆ ಮತ್ತು ಹೋಗುತ್ತವೆ; ಅವುಗಳನ್ನು ಸಹಿಸಿಕೊಳ್ಳುವುದನ್ನು ಕಲಿ.",
+                english: "Happiness and distress appear and disappear like winter and summer. One must learn to tolerate them."
             }
         ];
 
         const vocabulary = [
-            { term: "Karma (ಕರ್ಮ)", definition: "Action, deed, or work. (ಕೆಲಸ ಅಥವಾ ಕ್ರಿಯೆ)" },
-            { term: "Phala (ಫಲ)", definition: "The fruit or result of an action. (ಫಲ ಅಥವಾ ಪರಿಣಾಮ)" },
-            { term: "Dharma (ಧರ್ಮ)", definition: "Righteousness, duty, or moral order. (ನ್ಯಾಯ ಅಥವಾ ಕರ್ತವ್ಯ)" },
-            { term: "Adharma (ಅಧರ್ಮ)", definition: "Unrighteousness or lawlessness. (ಅನ್ಯಾಯ)" },
-            { term: "Sadhunam (ಸಾಧೂನಾಂ)", definition: "Of the good or pious people. (ಸಜ್ಜನರು)" },
-            { term: "Atman (ಆತ್ಮ)", definition: "The Soul; the dweller in the body. (ಆತ್ಮ)" },
-            { term: "Vasamsi (ವಾಸಾಪಿ)", definition: "Garments or clothes. (ಬಟ್ಟೆಗಳು)" },
-            { term: "Yoga-Kshema (ಯೋಗಕ್ಷೇಮ)", definition: "Protecting what one has and providing what one lacks. (ಕ್ಷೇಮಪಾಲನೆ)" },
-            { term: "Sharanam (ಶರಣಂ)", definition: "Surrender or refuge. (ಆಶ್ರಯ/ಶರಣಾಗತಿ)" },
-            { term: "Ripu (ರಿಪು)", definition: "Enemy. (ಶತ್ರು)" }
+            { word: "Karma", kan: "ಕರ್ಮ", def: "Action, duty, or work performed without selfish motives." },
+            { word: "Phala", kan: "ಫಲ", def: "The fruit, result, or reward of an action." },
+            { word: "Atman", kan: "ಆತ್ಮ", def: "The eternal soul or inner self." },
+            { word: "Dharma", kan: "ಧರ್ಮ", def: "Righteousness, moral duty, and the right way of living." },
+            { word: "Yoga", kan: "ಯೋಗ", def: "Discipline, balance, and connection with the Supreme." }
         ];
 
         const quizData = [
             {
-                question: "According to the Gita, what do we have the right to?",
-                options: ["The results of work", "To perform our duty", "To avoid work", "To judge others"],
-                correct: 1,
-                hint: "Think about 'Karma' vs 'Phala'."
+                q: "According to the Gita, what should we focus on while doing our homework or chores?",
+                opts: ["How much praise we will get", "Performing the duty to the best of our ability", "Finishing it as fast as possible"],
+                ans: 1
             },
             {
-                question: "What is compared to 'changing old clothes'?",
-                options: ["The Body changing souls", "The Soul changing bodies", "Changing your mind", "Changing religion"],
-                correct: 1,
-                hint: "Vasamsi jirnani..."
+                q: "What is considered both our greatest friend and our greatest enemy?",
+                opts: ["Other people", "Our own Mind", "Difficult situations"],
+                ans: 1
             },
             {
-                question: "Why does the Lord incarnate (Avatar)?",
-                options: ["To enjoy the world", "To destroy the world", "To establish Dharma", "To gain wealth"],
-                correct: 2,
-                hint: "Dharma-samsthapanarthaya..."
-            },
-            {
-                question: "Who is the soul's greatest enemy?",
-                options: ["Others", "Demons", "An uncontrolled Mind", "Weapons"],
-                correct: 2,
-                hint: "Atmaiva ripuratmanah..."
+                q: "How should we treat temporary happiness and sadness?",
+                opts: ["Learn to tolerate them like passing seasons", "Complain about the sad times", "Only focus on the happy times"],
+                ans: 0
             }
         ];
 
-        // --- Logic ---
-
-        // 1. Initialize Charts
-        function initCharts() {
-            // Theme Data Preparation
-            const themes = {};
-            shlokas.forEach(s => {
-                themes[s.theme] = (themes[s.theme] || 0) + 1;
-            });
-
-            // Doughnut Chart
-            const ctx1 = document.getElementById('themeChart').getContext('2d');
-            new Chart(ctx1, {
-                type: 'doughnut',
-                data: {
-                    labels: Object.keys(themes),
-                    datasets: [{
-                        data: Object.values(themes),
-                        backgroundColor: ['#d97706', '#78716c', '#b45309', '#a8a29e'], // Amber-600, Stone-500, Amber-700, Stone-400
-                        borderWidth: 0
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { position: 'bottom' }
-                    }
-                }
-            });
-
-            // Concept Frequency (Simulated for visualization variation)
-            const ctx2 = document.getElementById('conceptChart').getContext('2d');
-            new Chart(ctx2, {
-                type: 'bar',
-                data: {
-                    labels: ['Dharma', 'Atma', 'Bhakti', 'Karma', 'Yoga'],
-                    datasets: [{
-                        label: 'Mentions/Relevance',
-                        data: [4, 5, 3, 2, 2], // Approx weight based on content
-                        backgroundColor: '#fcd34d', // Amber-300
-                        borderRadius: 4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: { beginAtZero: true, display: false },
-                        x: { grid: { display: false } }
-                    },
-                    plugins: {
-                        legend: { display: false }
-                    }
-                }
-            });
-        }
-
-        // 2. Render Shlokas
-        function renderShlokas(filter) {
-            const grid = document.getElementById('shloka-grid');
-            grid.innerHTML = '';
-            
-            const filtered = filter === 'All' ? shlokas : shlokas.filter(s => s.theme === filter);
-
-            filtered.forEach(s => {
-                const card = document.createElement('div');
-                card.className = "bg-white rounded-xl card-shadow overflow-hidden shloka-card relative flex flex-col group cursor-pointer border border-stone-100";
-                
-                // Front View (Default)
-                const front = `
-                    <div class="card-front p-6 flex flex-col h-full justify-between transition-opacity duration-300">
-                        <div>
-                            <span class="inline-block px-2 py-1 bg-amber-100 text-amber-800 text-xs rounded-full mb-3 font-bold uppercase tracking-wider">${s.theme}</span>
-                            <h4 class="text-xl font-bold mb-4 text-amber-900 leading-snug kannada-text">${s.sanskrit.split('\n')[0]}...</h4>
-                            <p class="text-sm text-stone-500 font-mono bg-stone-50 p-2 rounded border border-stone-100">${s.transliteration.substring(0, 50)}...</p>
-                        </div>
-                        <div class="mt-4 text-center">
-                            <span class="text-amber-600 text-sm font-semibold group-hover:underline">Click to see Meaning &rarr;</span>
+        // --- 2. RENDER SHLOKA FLASHCARDS ---
+        function renderFlashcards() {
+            const grid = document.getElementById('flashcard-grid');
+            shlokas.forEach((s, index) => {
+                const cardHtml = `
+                    <div class="relative h-80 w-full perspective-1000 cursor-pointer group" onclick="this.classList.toggle('is-flipped')">
+                        <div class="card-inner w-full h-full transform-style-3d relative">
+                            <div class="absolute w-full h-full backface-hidden bg-white border border-stone-200 rounded-xl shadow-sm p-6 flex flex-col justify-between hover:shadow-md transition">
+                                <div>
+                                    <span class="text-xs font-bold text-amber-600 uppercase tracking-wider bg-amber-50 px-2 py-1 rounded">${s.theme}</span>
+                                    <h3 class="text-lg font-bold text-stone-800 mt-4 leading-relaxed kannada-text whitespace-pre-line">${s.sanskrit}</h3>
+                                </div>
+                                <div class="text-center text-sm text-stone-400 group-hover:text-amber-500 transition">Click to reveal meaning ⤻</div>
+                            </div>
+                            <div class="absolute w-full h-full backface-hidden bg-amber-50 border border-amber-200 rounded-xl shadow-sm p-6 rotate-y-180 flex flex-col justify-center overflow-y-auto">
+                                <p class="text-sm font-semibold text-stone-800 mb-3 italic">"${s.english}"</p>
+                                <hr class="border-amber-200 mb-3">
+                                <p class="text-sm text-stone-700 kannada-text">${s.kannada}</p>
+                            </div>
                         </div>
                     </div>
                 `;
-
-                // Back View (Hidden initially)
-                const back = `
-                    <div class="card-back absolute inset-0 bg-amber-50 p-6 flex flex-col h-full justify-center items-start opacity-0 pointer-events-none transition-opacity duration-300 overflow-y-auto">
-                        <h5 class="font-bold text-amber-900 mb-2">${s.summary}</h5>
-                        <p class="text-sm text-stone-800 mb-3 italic">"${s.english}"</p>
-                        <hr class="border-amber-200 w-full mb-3">
-                        <p class="text-sm text-stone-700 kannada-text font-medium">${s.kannada}</p>
-                    </div>
-                `;
-
-                card.innerHTML = front + back;
-
-                // Click Interaction
-                card.onclick = () => {
-                    const f = card.querySelector('.card-front');
-                    const b = card.querySelector('.card-back');
-                    
-                    if (f.style.opacity === '0') {
-                        // Show Front
-                        f.style.opacity = '1';
-                        b.style.opacity = '0';
-                        b.style.pointerEvents = 'none';
-                        card.classList.remove('ring-2', 'ring-amber-400');
-                    } else {
-                        // Show Back
-                        f.style.opacity = '0';
-                        b.style.opacity = '1';
-                        b.style.pointerEvents = 'auto';
-                        card.classList.add('ring-2', 'ring-amber-400');
-                    }
-                };
-
-                grid.appendChild(card);
+                grid.innerHTML += cardHtml;
             });
         }
 
-        function filterShlokas(category) {
-            // Update buttons
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                if (btn.innerText.includes(category)) {
-                    btn.classList.add('bg-amber-600', 'text-white');
-                    btn.classList.remove('bg-stone-200', 'text-stone-700');
-                } else {
-                    btn.classList.remove('bg-amber-600', 'text-white');
-                    btn.classList.add('bg-stone-200', 'text-stone-700');
-                }
-            });
-            renderShlokas(category);
-        }
-
-        // 3. Vocabulary Logic
-        function initVocab() {
+        // --- 3. RENDER VOCABULARY ---
+        function renderVocab() {
             const list = document.getElementById('vocab-list');
             const display = document.getElementById('vocab-display');
-
-            vocabulary.forEach(item => {
+            
+            vocabulary.forEach((v, index) => {
                 const btn = document.createElement('button');
-                btn.className = "w-full text-left px-4 py-3 bg-white border border-stone-200 rounded hover:bg-amber-50 hover:border-amber-300 transition flex justify-between items-center group";
-                btn.innerHTML = `
-                    <span class="font-semibold text-stone-700 group-hover:text-amber-800">${item.term.split(' ')[0]}</span>
-                    <span class="text-xs text-stone-400">&rsaquo;</span>
-                `;
+                btn.className = "w-full text-left px-4 py-3 mb-2 bg-white border border-stone-200 rounded-lg hover:border-amber-400 hover:bg-amber-50 transition font-semibold text-stone-700 flex justify-between items-center";
+                btn.innerHTML = `<span>${v.word}</span> <span class="text-xs text-stone-400 kannada-text">${v.kan}</span>`;
                 
                 btn.onclick = () => {
+                    // Remove active state from all
+                    Array.from(list.children).forEach(c => c.classList.remove('ring-2', 'ring-amber-500'));
+                    btn.classList.add('ring-2', 'ring-amber-500');
+                    
                     display.innerHTML = `
-                        <h4 class="text-2xl font-bold text-amber-700 mb-2 kannada-text">${item.term}</h4>
-                        <div class="w-16 h-1 bg-amber-200 mb-4 rounded"></div>
-                        <p class="text-lg text-stone-800">${item.definition}</p>
+                        <h3 class="text-3xl font-bold text-amber-800 mb-2">${v.word}</h3>
+                        <h4 class="text-xl text-stone-500 mb-6 kannada-text">${v.kan}</h4>
+                        <p class="text-lg text-stone-700 max-w-md">${v.def}</p>
                     `;
                 };
                 list.appendChild(btn);
             });
         }
 
-        // 4. Quiz Logic
+        // --- 4. RENDER QUIZ ---
         function renderQuiz() {
             const container = document.getElementById('quiz-container');
             container.innerHTML = '';
-
-            quizData.forEach((q, idx) => {
-                const qBlock = document.createElement('div');
-                qBlock.className = "bg-white p-6 rounded-lg shadow-sm border border-stone-200";
-                
+            
+            quizData.forEach((q, qIndex) => {
                 let optionsHtml = '';
-                q.options.forEach((opt, optIdx) => {
+                q.opts.forEach((opt, optIndex) => {
                     optionsHtml += `
-                        <label class="flex items-center space-x-3 cursor-pointer p-2 rounded hover:bg-stone-50">
-                            <input type="radio" name="q${idx}" value="${optIdx}" class="form-radio text-amber-600 h-4 w-4">
+                        <label class="flex items-start space-x-3 p-3 rounded-lg hover:bg-stone-50 border border-transparent hover:border-stone-200 cursor-pointer transition">
+                            <input type="radio" name="q${qIndex}" value="${optIndex}" class="mt-1 w-4 h-4 text-amber-600 focus:ring-amber-500">
                             <span class="text-stone-700">${opt}</span>
                         </label>
                     `;
                 });
 
-                qBlock.innerHTML = `
-                    <p class="font-bold text-stone-800 mb-3">${idx + 1}. ${q.question}</p>
-                    <div class="space-y-2 mb-3">${optionsHtml}</div>
-                    <div class="flex items-center justify-between mt-4">
-                        <button onclick="checkAnswer(${idx}, this)" class="text-xs font-bold uppercase tracking-wider text-amber-600 border border-amber-600 px-3 py-1 rounded hover:bg-amber-600 hover:text-white transition">Check Answer</button>
-                        <span class="feedback text-sm font-semibold hidden"></span>
+                container.innerHTML += `
+                    <div class="quiz-question">
+                        <p class="font-bold text-lg text-stone-800 mb-4">${qIndex + 1}. ${q.q}</p>
+                        <div class="space-y-2 mb-4 pl-2">${optionsHtml}</div>
+                        <div class="flex items-center space-x-4">
+                            <button onclick="checkAnswer(${qIndex}, this)" class="bg-amber-600 text-white px-4 py-2 rounded shadow hover:bg-amber-700 transition text-sm font-semibold">Submit Answer</button>
+                            <span class="feedback text-sm font-bold hidden"></span>
+                        </div>
                     </div>
-                    <div class="hint-box hidden mt-2 text-xs text-stone-500 italic bg-stone-100 p-2 rounded">
-                        Hint: ${q.hint}
-                    </div>
-                    <button onclick="toggleHint(this)" class="text-xs text-stone-400 mt-2 hover:text-stone-600 underline">Need a hint?</button>
                 `;
-                container.appendChild(qBlock);
             });
         }
 
-        function checkAnswer(qIdx, btn) {
-            const q = quizData[qIdx];
-            const selected = document.querySelector(`input[name="q${qIdx}"]:checked`);
+        function checkAnswer(qIndex, btn) {
+            const selected = document.querySelector(`input[name="q${qIndex}"]:checked`);
             const feedback = btn.nextElementSibling;
-
+            
             if (!selected) {
-                feedback.innerText = "Please select an option.";
-                feedback.className = "feedback text-sm font-semibold text-stone-400 block";
+                feedback.textContent = "Please select an answer!";
+                feedback.className = "feedback text-sm font-bold text-red-500 block";
                 return;
             }
-
-            if (parseInt(selected.value) === q.correct) {
-                feedback.innerText = "Correct! Well done.";
-                feedback.className = "feedback text-sm font-semibold text-green-600 block";
+            
+            if (parseInt(selected.value) === quizData[qIndex].ans) {
+                feedback.textContent = "✅ Correct!";
+                feedback.className = "feedback text-sm font-bold text-green-600 block";
+                btn.disabled = true;
+                btn.classList.add('opacity-50', 'cursor-not-allowed');
             } else {
-                feedback.innerText = "Try again.";
-                feedback.className = "feedback text-sm font-semibold text-red-500 block";
+                feedback.textContent = "❌ Not quite, try again.";
+                feedback.className = "feedback text-sm font-bold text-amber-600 block";
             }
-        }
-
-        function toggleHint(btn) {
-            const hintBox = btn.previousElementSibling;
-            hintBox.classList.toggle('hidden');
         }
 
         function resetQuiz() {
             renderQuiz();
         }
 
-        function scrollToSection(id) {
-            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // Initialize
+        // Initialize Everything
         window.onload = () => {
-            initCharts();
-            renderShlokas('All');
-            initVocab();
+            renderFlashcards();
+            renderVocab();
             renderQuiz();
         };
-
     </script>
 </body>
 </html>
