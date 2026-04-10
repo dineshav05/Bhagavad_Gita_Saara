@@ -130,55 +130,120 @@
 
     <script>
         // --- 1. DATA SOURCE ---
-        const shlokas = [
-            {
-                theme: "Karma (Duty)",
-                sanskrit: "ಕರ್ಮಣ್ಯೇವಾಧಿಕಾರಸ್ತೇ ಮಾ ಫಲೇಷು ಕದಾಚನ |\nಮಾ ಕರ್ಮಫಲಹೇತುರ್ಭೂಃ ಮಾ ತೇ ಸಂಗೋಸ್ತ್ವಕರ್ಮಣಿ ||",
-                translit: "Karmanye vadhikaraste ma phaleshu kadachana...",
-                kannada: "ನಿನಗೆ ಕರ್ಮ ಮಾಡಲು ಮಾತ್ರ ಅಧಿಕಾರವಿದೆ, ಫಲಗಳಿಗಿಲ್ಲ. ಫಲದ ನಿರೀಕ್ಷೆಯಿಲ್ಲದೆ ಕರ್ಮ ಮಾಡು.",
-                english: "You have a right to perform your duty, but not to the fruits of your actions."
-            },
-            {
-                theme: "Mind Control",
-                sanskrit: "ಉದ್ಧರೇದಾತ್ಮನಾತ್ಮಾನಂ ನಾತ್ಮಾನಮವಸಾದಯೇತ್ |\nಆತ್ಮೈವ ಹ್ಯಾತ್ಮನೋ ಬಂಧುರಾತ್ಮೈವ ರಿಪುರಾತ್ಮನಃ ||",
-                translit: "Uddhared atmanatmanam natmanam avasadayet...",
-                kannada: "ಮನುಷ್ಯನು ತನ್ನ ಉದ್ಧಾರವನ್ನು ತಾನೇ ಮಾಡಿಕೊಳ್ಳಬೇಕು. ಮನಸ್ಸೇ ಮನುಷ್ಯನಿಗೆ ಬಂಧು ಮತ್ತು ಶತ್ರು.",
-                english: "One must elevate himself by his own mind. The mind is the friend, and also the enemy."
-            },
-            {
-                theme: "Tolerance",
-                sanskrit: "ಮಾತ್ರಾಸ್ಪರ್ಶಾಸ್ತು ಕೌಂತೇಯ ಶೀತೋಷ್ಣಸುಖದುಃಖದಾಃ |\nಆಗಮಾಪಾಯಿನೋಽನಿತ್ಯಾಸ್ತಾಂಸ್ತಿತಿಕ್ಷಸ್ವ ಭಾರತ ||",
-                translit: "Matrasparshastu kaunteya shitoshnasukhaduhkhadah...",
-                kannada: "ಚಳಿ-ಬಿಸಿಲು ಮತ್ತು ಸುಖ-ದುಃಖಗಳು ಬರುತ್ತವೆ ಮತ್ತು ಹೋಗುತ್ತವೆ; ಅವುಗಳನ್ನು ಸಹಿಸಿಕೊಳ್ಳುವುದನ್ನು ಕಲಿ.",
-                english: "Happiness and distress appear and disappear like winter and summer. One must learn to tolerate them."
-            }
-        ];
+     
+            const shlokas = [
+    // Your existing 3 (Example placeholders, replace if needed)
+    { term: "Dharma", definition: "Righteous Duty: Acting with integrity and fulfilling your responsibilities." },
+    { term: "Karma", definition: "Action: The principle of taking positive action without anxiety over the outcome." },
+    { term: "Dhyana", definition: "Focus/Meditation: Training the mind to achieve deep concentration." },
+    // 12 New Flashcards added below
+    { term: "Shaurya", definition: "Courage: Facing challenges and fears with a brave heart, like Hanuman." },
+    { term: "Titiksha", definition: "Resilience: The psychological tolerance to endure ups and downs without losing balance." },
+    { term: "Karuna", definition: "Compassion: Deep empathy and the desire to help others in need." },
+    { term: "Bhakti", definition: "Devotion: Unwavering dedication and love towards a higher purpose or goal." },
+    { term: "Dama", definition: "Self-Control: Mastering your senses and impulses rather than being controlled by them." },
+    { term: "Satya", definition: "Truthfulness: Aligning your thoughts, words, and actions with honesty." },
+    { term: "Shanti", definition: "Inner Peace: A state of mental calmness, free from agitation and stress." },
+    { term: "Jnana", definition: "Wisdom: The pursuit of true knowledge and understanding of the self." },
+    { term: "Bala", definition: "Strength: Not just physical power, but inner mental and emotional fortitude." },
+    { term: "Ahimsa", definition: "Non-Violence: Practicing harmlessness in thought, word, and deed." },
+    { term: "Amanitvam", definition: "Humility: Freedom from arrogance and the willingness to learn from everyone." },
+    { term: "Utsaha", definition: "Enthusiasm: Approaching tasks and life with vibrant energy and joy." }
+];
 
-        const vocabulary = [
-            { word: "Karma", kan: "ಕರ್ಮ", def: "Action, duty, or work performed without selfish motives." },
-            { word: "Phala", kan: "ಫಲ", def: "The fruit, result, or reward of an action." },
-            { word: "Atman", kan: "ಆತ್ಮ", def: "The eternal soul or inner self." },
-            { word: "Dharma", kan: "ಧರ್ಮ", def: "Righteousness, moral duty, and the right way of living." },
-            { word: "Yoga", kan: "ಯೋಗ", def: "Discipline, balance, and connection with the Supreme." }
-        ];
-
+        const vocabularyData = [
+    // Your existing 5
+    { sanskrit: "योग", transliteration: "Yoga", meaning: "Union; Discipline; Connection" },
+    { sanskrit: "गुरु", transliteration: "Guru", meaning: "Teacher; Remover of darkness" },
+    { sanskrit: "प्राण", transliteration: "Prana", meaning: "Life force; Vital breath" },
+    { sanskrit: "चक्र", transliteration: "Chakra", meaning: "Wheel; Energy center" },
+    { sanskrit: "मन्त्र", transliteration: "Mantra", meaning: "Sacred utterance; Tool for the mind" },
+    // 15 New Vocabulary Words added below
+    { sanskrit: "आत्मा", transliteration: "Atman", meaning: "The inner self or soul" },
+    { sanskrit: "मोक्ष", transliteration: "Moksha", meaning: "Liberation; Freedom from limitations" },
+    { sanskrit: "संसार", transliteration: "Samsara", meaning: "The continuous cycle of life" },
+    { sanskrit: "अहिंसा", transliteration: "Ahimsa", meaning: "Non-violence; Compassion in action" },
+    { sanskrit: "सत्य", transliteration: "Satya", meaning: "Truth; That which is real" },
+    { sanskrit: "श्रद्धा", transliteration: "Shraddha", meaning: "Faith; Trust in the process" },
+    { sanskrit: "प्रज्ञा", transliteration: "Prajna", meaning: "Deep wisdom; Insight" },
+    { sanskrit: "आनन्द", transliteration: "Ananda", meaning: "Pure joy; Bliss" },
+    { sanskrit: "चित्त", transliteration: "Chitta", meaning: "Mind; Memory; Consciousness" },
+    { sanskrit: "बुद्धि", transliteration: "Buddhi", meaning: "Intellect; The faculty of reasoning" },
+    { sanskrit: "मनस्", transliteration: "Manas", meaning: "The sensory mind; Perception" },
+    { sanskrit: "वैराग्य", transliteration: "Vairagya", meaning: "Detachment; Freedom from craving" },
+    { sanskrit: "तपस्", transliteration: "Tapas", meaning: "Discipline; Dedicated effort" },
+    { sanskrit: "दान", transliteration: "Daanam", meaning: "Charity; The act of giving" },
+    { sanskrit: "मित्र", transliteration: "Mitra", meaning: "Friend; Ally" }
+];
         const quizData = [
-            {
-                q: "According to the Gita, what should we focus on while doing our homework or chores?",
-                opts: ["How much praise we will get", "Performing the duty to the best of our ability", "Finishing it as fast as possible"],
-                ans: 1
-            },
-            {
-                q: "What is considered both our greatest friend and our greatest enemy?",
-                opts: ["Other people", "Our own Mind", "Difficult situations"],
-                ans: 1
-            },
-            {
-                q: "How should we treat temporary happiness and sadness?",
-                opts: ["Learn to tolerate them like passing seasons", "Complain about the sad times", "Only focus on the happy times"],
-                ans: 0
-            }
-        ];
+    // Your existing 3 (Example placeholders)
+    { 
+        question: "What does 'Dharma' primarily refer to?", 
+        options: ["Wealth", "Righteous Duty", "Fame", "Anger"], 
+        answer: "Righteous Duty" 
+    },
+    { 
+        question: "Which path focuses on taking action without attachment to the results?", 
+        options: ["Karma Yoga", "Jnana Yoga", "Hatha Yoga", "Bhakti Yoga"], 
+        answer: "Karma Yoga" 
+    },
+    { 
+        question: "Hanuman is most widely celebrated for which behavioral quality?", 
+        options: ["Laziness", "Fear", "Unwavering Devotion (Bhakti)", "Greed"], 
+        answer: "Unwavering Devotion (Bhakti)" 
+    },
+    // 10 New Questions added below
+    { 
+        question: "In behavioral psychology, 'Titiksha' is best translated as:", 
+        options: ["Anxiety", "Resilience and Tolerance", "Confusion", "Joy"], 
+        answer: "Resilience and Tolerance" 
+    },
+    { 
+        question: "What is the true meaning of 'Ahimsa'?", 
+        options: ["Physical strength", "Non-violence in thought, word, and deed", "Arguing loudly", "Running away"], 
+        answer: "Non-violence in thought, word, and deed" 
+    },
+    { 
+        question: "Which of the following describes 'Dama' (Self-Control)?", 
+        options: ["Letting your impulses guide you", "Mastering your senses and reactions", "Ignoring everyone", "Sleeping all day"], 
+        answer: "Mastering your senses and reactions" 
+    },
+    { 
+        question: "What does 'Satya' demand from an individual?", 
+        options: ["Telling stories", "Aligning actions and words with truth", "Remaining silent", "Winning arguments"], 
+        answer: "Aligning actions and words with truth" 
+    },
+    { 
+        question: "When facing a major challenge, which quality of Hanuman should one invoke?", 
+        options: ["Shaurya (Courage)", "Duhkha (Sadness)", "Krodha (Anger)", "Moha (Delusion)"], 
+        answer: "Shaurya (Courage)" 
+    },
+    { 
+        question: "What is the ultimate goal of practicing 'Dhyana' (Meditation)?", 
+        options: ["Falling asleep", "Deep focus and mental clarity", "Gaining physical strength", "Memorizing texts"], 
+        answer: "Deep focus and mental clarity" 
+    },
+    { 
+        question: "The concept of 'Amanitvam' teaches us to be:", 
+        options: ["Arrogant", "Humble and free from false pride", "Jealous", "Loud"], 
+        answer: "Humble and free from false pride" 
+    },
+    { 
+        question: "Which word means 'Inner Peace' or freedom from mental agitation?", 
+        options: ["Shanti", "Kama", "Lobha", "Ajnana"], 
+        answer: "Shanti" 
+    },
+    { 
+        question: "In the context of life skills, 'Utsaha' translates to:", 
+        options: ["Boredom", "Fear of failure", "Enthusiasm and vibrant energy", "Giving up easily"], 
+        answer: "Enthusiasm and vibrant energy" 
+    },
+    { 
+        question: "True 'Bala' (Strength) according to ancient wisdom includes:", 
+        options: ["Only lifting heavy weights", "Mental and emotional fortitude", "Winning fights", "Having many friends"], 
+        answer: "Mental and emotional fortitude" 
+    }
+];
 
         // --- 2. RENDER SHLOKA FLASHCARDS ---
         function renderFlashcards() {
