@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Achala Bhagavad Gita Saara | Interactive Learning Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Kannada:wght@400;600;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #fdfbf7; color: #334155; }
+        .kannada-text { font-family: 'Noto Sans Kannada', sans-serif; }
+        
+        /* Smooth Card Flip Animation */
+        .perspective-1000 { perspective: 1000px; }
+        .transform-style-3d { transform-style: preserve-3d; }
+        .backface-hidden { backface-visibility: hidden; }
+        .rotate-y-180 { transform: rotateY(180deg); }
+        .card-inner { transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); }
+        .is-flipped .card-inner { transform: rotateY(180deg); }
+
+        /* Custom Accents */
+        .accent-border { border-top: 4px solid #d97706; }
+    </style>
+</head>
+<body class="antialiased selection:bg-amber-200 selection:text-amber-900">
+
+    <nav class="bg-amber-700 text-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center space-x-3">
+                    <span class="text-2xl">🪔</span>
+                    <span class="font-bold text-xl tracking-wide">Achala Value Education</span>
+                </div>
+                <div class="hidden md:flex space-x-6 text-sm font-semibold">
+                    <a href="#flipbook" class="hover:text-amber-200 transition">Digital Book</a>
+                    <a href="#shlokas" class="hover:text-amber-200 transition">Shloka Explorer</a>
+                    <a href="#vocab" class="hover:text-amber-200 transition">Vocabulary</a>
+                    <a href="#quiz" class="hover:text-amber-200 transition">Interactive Quiz</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold text-amber-900 mb-4 kannada-text">ಭಗವದ್ಗೀತೆಯ ಬೆಳಕು</h1>
+        <h2 class="text-2xl md:text-3xl font-semibold text-stone-700 mb-6">The Light of Bhagavad Gita</h2>
+        <p class="max-w-2xl mx-auto text-lg text-stone-600 mb-10">An interactive life-skills manual designed to build focus, discipline, and strong moral character.</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+            <div class="bg-white p-6 rounded-xl shadow-sm accent-border">
+                <h3 class="font-bold text-lg text-amber-800 mb-2">🧑‍🏫 For Teachers</h3>
+                <p class="text-sm text-stone-600">Project the digital book on your smartboard. Use the Shloka Explorer for morning assemblies and the Quiz for classroom activities.</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-sm accent-border">
+                <h3 class="font-bold text-lg text-amber-800 mb-2">👨‍👩‍👧 For Parents</h3>
+                <p class="text-sm text-stone-600">Read the flipbook with your child. Use the Vocabulary section to help them learn Sanskrit pronunciation and life values.</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-sm accent-border">
+                <h3 class="font-bold text-lg text-amber-800 mb-2">🎓 For Students</h3>
+                <p class="text-sm text-stone-600">Click on the Shloka Flashcards to reveal the meanings, test your knowledge in the Quiz, and apply the lessons to your daily life.</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-20">
+
+        <section id="flipbook" class="scroll-mt-20">
+            <div class="flex items-center space-x-3 mb-6">
+                <h2 class="text-3xl font-bold text-stone-800">Read the Book</h2>
+                <div class="h-1 flex-grow bg-amber-200 rounded"></div>
+            </div>
+            <div class="bg-stone-100 p-2 rounded-2xl shadow-inner">
+                <div class="relative w-full aspect-[16/9] md:aspect-[21/9] rounded-xl overflow-hidden border border-stone-300 bg-white">
+                    <iframe allowfullscreen="true" scrolling="no" class="w-full h-full border-none" src="https://heyzine.com/flip-book/preview.html"></iframe>
+                </div>
+            </div>
+        </section>
+
+        <section id="shlokas" class="scroll-mt-20">
+            <div class="flex items-center space-x-3 mb-6">
+                <h2 class="text-3xl font-bold text-stone-800">Shloka Flashcards</h2>
+                <div class="h-1 flex-grow bg-amber-200 rounded"></div>
+            </div>
+            <p class="text-stone-600 mb-8">Click or tap any card to flip it and reveal the meaning in Kannada and English.</p>
+            
+            <div id="flashcard-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                </div>
+        </section>
+
+        <section id="vocab" class="scroll-mt-20">
+            <div class="flex items-center space-x-3 mb-6">
+                <h2 class="text-3xl font-bold text-stone-800">Sanskrit Vocabulary</h2>
+                <div class="h-1 flex-grow bg-amber-200 rounded"></div>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-sm border border-stone-200 overflow-hidden flex flex-col md:flex-row">
+                <div class="w-full md:w-1/3 bg-stone-50 border-r border-stone-200 p-4 max-h-96 overflow-y-auto" id="vocab-list">
+                    </div>
+                <div class="w-full md:w-2/3 p-8 flex flex-col justify-center items-center text-center min-h-[250px]" id="vocab-display">
+                    <span class="text-6xl mb-4 opacity-20">🔍</span>
+                    <p class="text-lg text-stone-500">Select a word from the list to see its meaning.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="quiz" class="scroll-mt-20 mb-20">
+            <div class="flex items-center space-x-3 mb-6">
+                <h2 class="text-3xl font-bold text-stone-800">Test Your Knowledge</h2>
+                <div class="h-1 flex-grow bg-amber-200 rounded"></div>
+            </div>
+            
+            <div class="max-w-3xl mx-auto bg-white p-8 rounded-2xl shadow-sm border border-stone-200">
+                <div id="quiz-container" class="space-y-8">
+                    </div>
+                <div class="mt-8 text-center pt-6 border-t border-stone-100">
+                    <button onclick="resetQuiz()" class="px-6 py-2 bg-stone-100 text-stone-600 font-semibold rounded-lg hover:bg-stone-200 transition">↻ Retake Quiz</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-stone-900 text-stone-400 py-10 text-center">
+        <p class="font-serif italic text-xl text-stone-300 mb-2">"Uddhared atmanatmanam"</p>
+        <p class="text-sm mb-6">Elevate yourself by your own self. (Gita 6.5)</p>
+        <p class="text-xs">© 2026 Achala Value Education Series | Designed by Dinesha Vishwanatha</p>
+    </footer>
+
+    <script>
+        // --- 1. DATA SOURCE ---
+        const shlokas = [
+            {
+                theme: "Karma (Duty)",
+                sanskrit: "ಕರ್ಮಣ್ಯೇವಾಧಿಕಾರಸ್ತೇ ಮಾ ಫಲೇಷು ಕದಾಚನ |\nಮಾ ಕರ್ಮಫಲಹೇತುರ್ಭೂಃ ಮಾ ತೇ ಸಂಗೋಸ್ತ್ವಕರ್ಮಣಿ ||",
+                translit: "Karmanye vadhikaraste ma phaleshu kadachana...",
+                kannada: "ನಿನಗೆ ಕರ್ಮ ಮಾಡಲು ಮಾತ್ರ ಅಧಿಕಾರವಿದೆ, ಫಲಗಳಿಗಿಲ್ಲ. ಫಲದ ನಿರೀಕ್ಷೆಯಿಲ್ಲದೆ ಕರ್ಮ ಮಾಡು.",
+                english: "You have a right to perform your duty, but not to the fruits of your actions."
+            },
+            {
+                theme: "Mind Control",
+                sanskrit: "ಉದ್ಧರೇದಾತ್ಮನಾತ್ಮಾನಂ ನಾತ್ಮಾನಮವಸಾದಯೇತ್ |\nಆತ್ಮೈವ ಹ್ಯಾತ್ಮನೋ ಬಂಧುರಾತ್ಮೈವ ರಿಪುರಾತ್ಮನಃ ||",
+                translit: "Uddhared atmanatmanam natmanam avasadayet...",
+                kannada: "ಮನುಷ್ಯನು ತನ್ನ ಉದ್ಧಾರವನ್ನು ತಾನೇ ಮಾಡಿಕೊಳ್ಳಬೇಕು. ಮನಸ್ಸೇ ಮನುಷ್ಯನಿಗೆ ಬಂಧು ಮತ್ತು ಶತ್ರು.",
+                english: "One must elevate himself by his own mind. The mind is the friend, and also the enemy."
+            },
+            {
+                theme: "Tolerance",
+                sanskrit: "ಮಾತ್ರಾಸ್ಪರ್ಶಾಸ್ತು ಕೌಂತೇಯ ಶೀತೋಷ್ಣಸುಖದುಃಖದಾಃ |\nಆಗಮಾಪಾಯಿನೋಽನಿತ್ಯಾಸ್ತಾಂಸ್ತಿತಿಕ್ಷಸ್ವ ಭಾರತ ||",
+                translit: "Matrasparshastu kaunteya shitoshnasukhaduhkhadah...",
+                kannada: "ಚಳಿ-ಬಿಸಿಲು ಮತ್ತು ಸುಖ-ದುಃಖಗಳು ಬರುತ್ತವೆ ಮತ್ತು ಹೋಗುತ್ತವೆ; ಅವುಗಳನ್ನು ಸಹಿಸಿಕೊಳ್ಳುವುದನ್ನು ಕಲಿ.",
+                english: "Happiness and distress appear and disappear like winter and summer. One must learn to tolerate them."
+            }
+        ];
+
+        const vocabulary = [
+            { word: "Karma", kan: "ಕರ್ಮ", def: "Action, duty, or work performed without selfish motives." },
+            { word: "Phala", kan: "ಫಲ", def: "The fruit, result, or reward of an action." },
+            { word: "Atman", kan: "ಆತ್ಮ", def: "The eternal soul or inner self." },
+            { word: "Dharma", kan: "ಧರ್ಮ", def: "Righteousness, moral duty, and the right way of living." },
+            { word: "Yoga", kan: "ಯೋಗ", def: "Discipline, balance, and connection with the Supreme." }
+        ];
+
+        const quizData = [
+            {
+                q: "According to the Gita, what should we focus on while doing our homework or chores?",
+                opts: ["How much praise we will get", "Performing the duty to the best of our ability", "Finishing it as fast as possible"],
+                ans: 1
+            },
+            {
+                q: "What is considered both our greatest friend and our greatest enemy?",
+                opts: ["Other people", "Our own Mind", "Difficult situations"],
+                ans: 1
+            },
+            {
+                q: "How should we treat temporary happiness and sadness?",
+                opts: ["Learn to tolerate them like passing seasons", "Complain about the sad times", "Only focus on the happy times"],
+                ans: 0
+            }
+        ];
+
+        // --- 2. RENDER SHLOKA FLASHCARDS ---
+        function renderFlashcards() {
+            const grid = document.getElementById('flashcard-grid');
+            shlokas.forEach((s, index) => {
+                const cardHtml = `
+                    <div class="relative h-80 w-full perspective-1000 cursor-pointer group" onclick="this.classList.toggle('is-flipped')">
+                        <div class="card-inner w-full h-full transform-style-3d relative">
+                            <div class="absolute w-full h-full backface-hidden bg-white border border-stone-200 rounded-xl shadow-sm p-6 flex flex-col justify-between hover:shadow-md transition">
+                                <div>
+                                    <span class="text-xs font-bold text-amber-600 uppercase tracking-wider bg-amber-50 px-2 py-1 rounded">${s.theme}</span>
+                                    <h3 class="text-lg font-bold text-stone-800 mt-4 leading-relaxed kannada-text whitespace-pre-line">${s.sanskrit}</h3>
+                                </div>
+                                <div class="text-center text-sm text-stone-400 group-hover:text-amber-500 transition">Click to reveal meaning ⤻</div>
+                            </div>
+                            <div class="absolute w-full h-full backface-hidden bg-amber-50 border border-amber-200 rounded-xl shadow-sm p-6 rotate-y-180 flex flex-col justify-center overflow-y-auto">
+                                <p class="text-sm font-semibold text-stone-800 mb-3 italic">"${s.english}"</p>
+                                <hr class="border-amber-200 mb-3">
+                                <p class="text-sm text-stone-700 kannada-text">${s.kannada}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                grid.innerHTML += cardHtml;
+            });
+        }
+
+        // --- 3. RENDER VOCABULARY ---
+        function renderVocab() {
+            const list = document.getElementById('vocab-list');
+            const display = document.getElementById('vocab-display');
+            
+            vocabulary.forEach((v, index) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left px-4 py-3 mb-2 bg-white border border-stone-200 rounded-lg hover:border-amber-400 hover:bg-amber-50 transition font-semibold text-stone-700 flex justify-between items-center";
+                btn.innerHTML = `<span>${v.word}</span> <span class="text-xs text-stone-400 kannada-text">${v.kan}</span>`;
+                
+                btn.onclick = () => {
+                    // Remove active state from all
+                    Array.from(list.children).forEach(c => c.classList.remove('ring-2', 'ring-amber-500'));
+                    btn.classList.add('ring-2', 'ring-amber-500');
+                    
+                    display.innerHTML = `
+                        <h3 class="text-3xl font-bold text-amber-800 mb-2">${v.word}</h3>
+                        <h4 class="text-xl text-stone-500 mb-6 kannada-text">${v.kan}</h4>
+                        <p class="text-lg text-stone-700 max-w-md">${v.def}</p>
+                    `;
+                };
+                list.appendChild(btn);
+            });
+        }
+
+        // --- 4. RENDER QUIZ ---
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            container.innerHTML = '';
+            
+            quizData.forEach((q, qIndex) => {
+                let optionsHtml = '';
+                q.opts.forEach((opt, optIndex) => {
+                    optionsHtml += `
+                        <label class="flex items-start space-x-3 p-3 rounded-lg hover:bg-stone-50 border border-transparent hover:border-stone-200 cursor-pointer transition">
+                            <input type="radio" name="q${qIndex}" value="${optIndex}" class="mt-1 w-4 h-4 text-amber-600 focus:ring-amber-500">
+                            <span class="text-stone-700">${opt}</span>
+                        </label>
+                    `;
+                });
+
+                container.innerHTML += `
+                    <div class="quiz-question">
+                        <p class="font-bold text-lg text-stone-800 mb-4">${qIndex + 1}. ${q.q}</p>
+                        <div class="space-y-2 mb-4 pl-2">${optionsHtml}</div>
+                        <div class="flex items-center space-x-4">
+                            <button onclick="checkAnswer(${qIndex}, this)" class="bg-amber-600 text-white px-4 py-2 rounded shadow hover:bg-amber-700 transition text-sm font-semibold">Submit Answer</button>
+                            <span class="feedback text-sm font-bold hidden"></span>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function checkAnswer(qIndex, btn) {
+            const selected = document.querySelector(`input[name="q${qIndex}"]:checked`);
+            const feedback = btn.nextElementSibling;
+            
+            if (!selected) {
+                feedback.textContent = "Please select an answer!";
+                feedback.className = "feedback text-sm font-bold text-red-500 block";
+                return;
+            }
+            
+            if (parseInt(selected.value) === quizData[qIndex].ans) {
+                feedback.textContent = "✅ Correct!";
+                feedback.className = "feedback text-sm font-bold text-green-600 block";
+                btn.disabled = true;
+                btn.classList.add('opacity-50', 'cursor-not-allowed');
+            } else {
+                feedback.textContent = "❌ Not quite, try again.";
+                feedback.className = "feedback text-sm font-bold text-amber-600 block";
+            }
+        }
+
+        function resetQuiz() {
+            renderQuiz();
+        }
+
+        // Initialize Everything
+        window.onload = () => {
+            renderFlashcards();
+            renderVocab();
+            renderQuiz();
+        };
+    </script>
+</body>
+</html>
