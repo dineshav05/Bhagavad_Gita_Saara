@@ -38,6 +38,10 @@
                     <a href="#shlokas" class="hover:text-amber-200 transition">Shloka Explorer</a>
                     <a href="#vocab" class="hover:text-amber-200 transition">Vocabulary</a>
                     <a href="#quiz" class="hover:text-amber-200 transition">Interactive Quiz</a>
+                    <button id="audio-toggle" onclick="toggleAudio()" class="hover:text-amber-200 transition flex items-center space-x-1" title="Toggle Sound">
+                        <span id="audio-icon" class="text-lg">🔊</span>
+                        <span>Sound On</span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -370,7 +374,50 @@ const quizData = [
     }
 ];
         
-        
+        // --- AUDIO ENGINE ---
+// 1. Point these to where your mp3 files are stored
+const soundPaths = {
+    flip: 'audio/card_flip.mp3',
+    vocab: 'audio/vocab_select.mp3',
+    correct: 'audio/quiz_correct.mp3',
+    incorrect: 'audio/quiz_wrong.mp3'
+};
+
+// 2. Preload the audio objects
+const sounds = {
+    flip: new Audio(soundPaths.flip),
+    vocab: new Audio(soundPaths.vocab),
+    correct: new Audio(soundPaths.correct),
+    incorrect: new Audio(soundPaths.incorrect)
+};
+
+// 3. Global Mute State
+let isMuted = false;
+
+function toggleAudio() {
+    isMuted = !isMuted;
+    const btnIcon = document.getElementById('audio-icon');
+    const btnText = document.querySelector('#audio-toggle span:nth-child(2)');
+    
+    if (isMuted) {
+        btnIcon.textContent = '🔇';
+        btnText.textContent = 'Sound Off';
+    } else {
+        btnIcon.textContent = '🔊';
+        btnText.textContent = 'Sound On';
+    }
+}
+
+// 4. Play function with safety catch for browser autoplay rules
+function playUIFeedback(soundName) {
+    if (!isMuted && sounds[soundName]) {
+        // Reset time to 0 so it plays immediately even if clicked rapidly
+        sounds[soundName].currentTime = 0; 
+        sounds[soundName].play().catch(error => {
+            console.log("Audio playback prevented by browser:", error);
+        });
+    }
+}
        
 
         // --- 2. RENDER SHLOKA FLASHCARDS ---
@@ -378,7 +425,7 @@ const quizData = [
             const grid = document.getElementById('flashcard-grid');
             shlokas.forEach((s, index) => {
                 const cardHtml = `
-                    <div class="relative h-80 w-full perspective-1000 cursor-pointer group" onclick="this.classList.toggle('is-flipped')">
+                    <div class="relative h-80 w-full perspective-1000 cursor-pointer group" onclick="this.classList.toggle('is-flipped'); playUIFeedback('flip');">
                         <div class="card-inner w-full h-full transform-style-3d relative">
                             <div class="absolute w-full h-full backface-hidden bg-white border border-stone-200 rounded-xl shadow-sm p-6 flex flex-col justify-between hover:shadow-md transition">
                                 <div>
@@ -410,8 +457,12 @@ const quizData = [
                 btn.innerHTML = `<span>${v.word}</span> <span class="text-xs text-stone-400 kannada-text">${v.kan}</span>`;
                 
                 btn.onclick = () => {
-                    // Remove active state from all
+                    // 1. Play Sound
+                    playUIFeedback('vocab');
+                    
+                    // Remove active state from all... (keep your existing code below this)
                     Array.from(list.children).forEach(c => c.classList.remove('ring-2', 'ring-amber-500'));
+                    // ... rest of the function remains the same
                     btn.classList.add('ring-2', 'ring-amber-500');
                     
                     display.innerHTML = `
@@ -458,17 +509,20 @@ const quizData = [
             const feedback = btn.nextElementSibling;
             
             if (!selected) {
+                // Optional: play a subtle 'error' or leave silent
                 feedback.textContent = "Please select an answer!";
                 feedback.className = "feedback text-sm font-bold text-red-500 block";
                 return;
             }
             
             if (parseInt(selected.value) === quizData[qIndex].ans) {
+                playUIFeedback('correct'); // Trigger Success Sound
                 feedback.textContent = "✅ Correct!";
                 feedback.className = "feedback text-sm font-bold text-green-600 block";
                 btn.disabled = true;
                 btn.classList.add('opacity-50', 'cursor-not-allowed');
             } else {
+                playUIFeedback('incorrect'); // Trigger Try Again Sound
                 feedback.textContent = "❌ Not quite, try again.";
                 feedback.className = "feedback text-sm font-bold text-amber-600 block";
             }
