@@ -408,14 +408,37 @@ function toggleAudio() {
     }
 }
 
-// 4. Play function with safety catch for browser autoplay rules
+// 4. Custom Playback Durations (in milliseconds)
+const soundDurations = {
+    flip: 15000,      // 15 seconds
+    vocab: 15000,     // 15 seconds
+    correct: 3000,    // 3 seconds
+    incorrect: 3000   // 3 seconds
+};
+
+// Store active timers so we can cancel them if the user clicks rapidly
+const activeTimers = {};
+
 function playUIFeedback(soundName) {
     if (!isMuted && sounds[soundName]) {
-        // Reset time to 0 so it plays immediately even if clicked rapidly
-        sounds[soundName].currentTime = 0; 
-        sounds[soundName].play().catch(error => {
+        const audio = sounds[soundName];
+
+        // 1. If this sound is currently playing, clear its stop-timer
+        if (activeTimers[soundName]) {
+            clearTimeout(activeTimers[soundName]);
+        }
+
+        // 2. Reset and play the sound
+        audio.currentTime = 0; 
+        audio.play().catch(error => {
             console.log("Audio playback prevented by browser:", error);
         });
+
+        // 3. Set a strict timer to pause the audio based on our custom durations
+        activeTimers[soundName] = setTimeout(() => {
+            audio.pause();
+            audio.currentTime = 0; // Reset it to the beginning for the next click
+        }, soundDurations[soundName]);
     }
 }
        
